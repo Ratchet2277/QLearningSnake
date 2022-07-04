@@ -10,11 +10,9 @@ class Board:
         self.width = width
         self.snake = None
         self.goal = None
-        self.on_going = False
-
-    def add_snake(self, snake: Snake):
-        self.snake = snake
         self.on_going = True
+        self.snake = Snake(Coordinates(width >> 1, height >> 1))
+        self.new_goal()
 
     def add_goal(self, goal: Coordinates):
         self.goal = goal
@@ -23,7 +21,15 @@ class Board:
         if not self.snake.is_alive:
             self.on_going = False
             return
-        self.snake.run()
+        self.snake.move()
+        if not 0 < self.snake.get_head_pos().x <= self.width:
+            self.snake.is_alive = False
+            self.on_going = False
+            return
+        if not 0 < self.snake.get_head_pos().y <= self.height:
+            self.snake.is_alive = False
+            self.on_going = False
+            return
         if self.snake.get_head_pos() != self.goal:
             return
         self.snake.growth()
