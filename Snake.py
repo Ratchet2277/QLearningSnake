@@ -56,4 +56,3 @@ class Snake:
             self.is_alive = False
             return True
         return False
-
