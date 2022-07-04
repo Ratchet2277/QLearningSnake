@@ -9,7 +9,7 @@ class Snake:
         self.length = length
         self.direction = direction
         self.body: list[Coordinates] = []
-
+        self.is_alive = True
         self.body.append(position)
 
         for i in range(0, length - 1):
@@ -35,6 +35,8 @@ class Snake:
         return next_case
 
     def move(self) -> None:
+        if not self.is_alive:
+            return
         next_position = self.get_next_coordinate()
         self.body = [next_position] + self.body[0:self.length - 2]
 
@@ -48,3 +50,10 @@ class Snake:
 
     def get_head_pos(self) -> Coordinates:
         return self.body[0]
+
+    def check_tail_collision(self) -> bool:
+        if self.get_head_pos() in self.body[1:]:
+            self.is_alive = False
+            return True
+        return False
+
