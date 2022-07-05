@@ -19,26 +19,25 @@ class Snake:
         body_range = range(0, len(self.body))
         if origin not in body_range:
             origin = 0
-        next_case = copy(self.body[origin])
+        next_cell = copy(self.body[origin])
         if not direction:
             direction = self.direction
 
         match direction:
             case Direction.NORTH:
-                next_case.y -= 1
+                next_cell.y -= 1
             case Direction.SOUTH:
-                next_case.y += 1
+                next_cell.y += 1
             case Direction.EAST:
-                next_case.x += 1
+                next_cell.x += 1
             case Direction.WEST:
-                next_case.x -= 1
-        return next_case
+                next_cell.x -= 1
+        return next_cell
 
     def move(self) -> None:
         if not self.is_alive:
             return
-        next_position = self.get_next_coordinate()
-        self.body = [next_position] + self.body[0:self.length - 2]
+        self.body = [self.get_next_coordinate()] + self.body[0:self.length - 2]
 
     def turn(self, direction: Direction) -> None:
         if direction == -self.direction:
