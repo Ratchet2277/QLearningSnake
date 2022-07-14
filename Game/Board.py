@@ -14,7 +14,6 @@ from .Snake import Snake
 class Board(BoardInterface):
 
     def __init__(self, height: int, width: int, input: InputInterface = None):
-        super().__init__(height, width, input)
         self.free_cell = []
         self.height = height
         self.width = width

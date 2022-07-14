@@ -1,9 +1,13 @@
+from abc import abstractmethod, ABC
+
 from Enum.Direction import Direction
 
 
-class InputInterface:
+class InputInterface(ABC):
+    @abstractmethod
     def __init__(self):
         pass
 
-    def get_input(self) -> Direction|None:
+    @abstractmethod
+    def get_input(self) -> Direction | None:
         raise NotImplementedError()

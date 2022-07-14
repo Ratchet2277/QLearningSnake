@@ -6,7 +6,6 @@ from Game.Interface.DrawerInterface import DrawerInterface
 
 class Drawer(DrawerInterface):
     def __init__(self, bord: BoardInterface, frame_rate: int = 30, square_size: int = 8):
-        super().__init__(bord)
         self.bord = bord
         self.frame_rate = frame_rate
         self.square_size = square_size

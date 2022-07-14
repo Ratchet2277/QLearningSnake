@@ -28,7 +28,7 @@ def process_events(events: list[pygame.event.Event]) -> Direction | None:
 
 class KeyboardInput(InputInterface):
     def __init__(self):
-        super().__init__()
+        pass
 
     def get_input(self) -> Direction|None:
         return process_events(pygame.event.get(pygame.KEYDOWN, pump=False))
