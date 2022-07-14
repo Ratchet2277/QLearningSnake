@@ -3,6 +3,7 @@ import threading
 
 import pygame
 
+from Enum.Direction import Direction
 from Game.Drawer import Drawer
 from Game.Interface.BoardInterface import BoardInterface
 from Struct.Coordinates import Coordinates
@@ -17,7 +18,6 @@ class Board(BoardInterface):
         self.free_cell = []
         self.height = height
         self.width = width
-        self.snake = None
         self.goal = None
         self.on_going = True
         self.snake = Snake(Coordinates(width >> 1, height >> 1))
@@ -44,7 +44,6 @@ class Board(BoardInterface):
             self.on_going = False
             self.snake.is_alive = False
             self.drawer.draw()
-            pygame.time.wait(1000)
             pygame.quit()
             exit()
 
@@ -55,18 +54,16 @@ class Board(BoardInterface):
         self.on_going = False
         self.snake.is_alive = False
         self.drawer.draw()
-        pygame.time.wait(1000)
         pygame.quit()
-        exit()
 
-    def run(self) -> None:
+    def run(self, direction: Direction = None) -> None:
         pygame.event.pump()
         if self.snake.check_tail_collision():
             self.game_over()
         if not self.snake.is_alive:
             self.game_over()
         self.process_events()
-        self.snake.move()
+        self.snake.move(direction)
         if not 0 < self.snake.get_head_pos().x <= self.width:
             self.game_over()
         if not 0 < self.snake.get_head_pos().y <= self.height:
@@ -74,6 +71,9 @@ class Board(BoardInterface):
         if self.snake.get_head_pos() == self.goal:
             self.snake.grow()
             self.new_goal()
+
+        if self.on_going:
+            self.drawer.draw()
 
     def new_goal(self):
         self.get_all_empty_cell()

@@ -4,19 +4,13 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
+from tf_agents.environments import utils
+
 # Press the green button in the gutter to run the script.
-
-from Game.Board import Board
-
-
-def main_game():
-    board = Board(100, 100)
-    while board.on_going:
-        board.run()
-        board.drawer.draw()
-
+from Tenserflow.Environment import SnakeEnvironement
 
 if __name__ == '__main__':
-    main_game()
+    environment = SnakeEnvironement()
+    utils.validate_py_environment(environment, episodes=5)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

@@ -1,8 +1,8 @@
 from copy import copy
 
+from Enum.Direction import Direction
 from Game.Interface.InputInterface import InputInterface
 from Struct.Coordinates import Coordinates
-from Enum.Direction import Direction
 
 
 class Snake:
@@ -39,13 +39,17 @@ class Snake:
                 next_cell.x -= 1
         return next_cell
 
-    def move(self) -> None:
-        if not self.input:
+    def move(self, direction: Direction = None) -> None:
+        if not self.input and not direction:
             raise Exception("No input set")
 
-        input = self.input.get_input()
-        if input:
-            self.turn(input)
+        if not direction:
+            user_input = self.input.get_input()
+        else:
+            user_input = direction
+
+        if user_input:
+            self.turn(user_input)
 
         if not self.is_alive:
             return
