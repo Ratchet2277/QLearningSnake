@@ -1,4 +1,6 @@
 import random
+import threading
+
 import pygame
 from pygame.event import Event
 
@@ -12,6 +14,7 @@ class Board:
     frame_rate = 30
 
     def __init__(self, height: int, width: int):
+        self.free_cell = []
         self.height = height
         self.width = width
         self.snake = None
@@ -91,17 +94,27 @@ class Board:
             self.new_goal()
 
     def new_goal(self):
-        free_cell = self.get_all_empty_cell()
-        if not len(free_cell):
+        self.get_all_empty_cell()
+        if not len(self.free_cell):
             self.game_over()
             return
-        self.goal = random.choice(free_cell)
+        self.goal = random.choice(self.free_cell)
 
-    def get_all_empty_cell(self) -> list[Coordinates]:
-        free_cell = []
+    def get_all_empty_cell(self) -> None:
+        self.free_cell = []
+        threads = []
+        for x in range(0, self.height):
+            thread = threading.Thread(target=self.get_empty_cell_in_row, args=(x,))
+            thread.start()
+            print(thread)
+            threads.append(thread)
+
+        for thread in threads:
+            print(thread)
+            thread.join()
+
+    def get_empty_cell_in_row(self, row: int) -> None:
         for x in range(0, self.width):
-            for y in range(0, self.height):
-                cell = Coordinates(x, y)
-                if cell not in self.snake.body:
-                    free_cell.append(cell)
-        return free_cell
+            cell = Coordinates(x, row)
+            if cell not in self.snake.body:
+                self.free_cell.append(cell)
