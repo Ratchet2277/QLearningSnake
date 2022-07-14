@@ -40,11 +40,11 @@ class Snake:
         self.body = [self.get_next_coordinate()] + self.body[0:self.length - 2]
 
     def turn(self, direction: Direction) -> None:
-        if direction == -self.direction:
+        if abs(direction) == abs(self.direction):
             return
         self.direction = direction
 
-    def growth(self, step: int = 1):
+    def grow(self, step: int = 1):
         self.length += step
 
     def get_head_pos(self) -> Coordinates:

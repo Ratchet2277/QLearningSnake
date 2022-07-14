@@ -5,6 +5,9 @@
 
 
 # Press the green button in the gutter to run the script.
+import pygame
+from pygame.surface import SurfaceType
+
 from Board import Board
 
 
@@ -12,6 +15,7 @@ def main_game():
     board = Board(100, 100)
     while board.on_going:
         board.run()
+        board.draw()
 
 
 if __name__ == '__main__':
