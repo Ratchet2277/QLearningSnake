@@ -88,11 +88,9 @@ class Board(BoardInterface):
         for x in range(0, self.height):
             thread = threading.Thread(target=self.get_empty_cell_in_row, args=(x,))
             thread.start()
-            print(thread)
             threads.append(thread)
 
         for thread in threads:
-            print(thread)
             thread.join()
 
     def get_empty_cell_in_row(self, row: int) -> None:
