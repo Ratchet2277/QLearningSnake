@@ -13,7 +13,7 @@ def main_game():
     board = Board(100, 100)
     while board.on_going:
         board.run()
-        board.draw()
+        board.drawer.draw()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from copy import copy
 
+from Game.Interface.InputInterface import InputInterface
 from Struct.Coordinates import Coordinates
 from Enum.Direction import Direction
 
@@ -10,10 +11,14 @@ class Snake:
         self.direction = direction
         self.body: list[Coordinates] = []
         self.is_alive = True
+        self.input = None
         self.body.append(position)
 
         for i in range(0, length - 1):
             self.body.append(self.get_next_coordinate(-direction, i))
+
+    def set_input(self, input: InputInterface):
+        self.input = input
 
     def get_next_coordinate(self, direction: Direction = None, origin: int = 0) -> Coordinates:
         body_range = range(0, len(self.body))
@@ -35,6 +40,13 @@ class Snake:
         return next_cell
 
     def move(self) -> None:
+        if not self.input:
+            raise Exception("No input set")
+
+        input = self.input.get_input()
+        if input:
+            self.turn(input)
+
         if not self.is_alive:
             return
         self.body = [self.get_next_coordinate()] + self.body[0:self.length - 2]
