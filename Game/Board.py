@@ -4,8 +4,8 @@ import threading
 import pygame
 from pygame.event import Event
 
-from Coordinates import Coordinates
-from Direction import Direction
+from Struct.Coordinates import Coordinates
+from Enum.Direction import Direction
 from Snake import Snake
 
 

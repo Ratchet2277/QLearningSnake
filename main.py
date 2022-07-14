@@ -5,10 +5,8 @@
 
 
 # Press the green button in the gutter to run the script.
-import pygame
-from pygame.surface import SurfaceType
 
-from Board import Board
+from Game.Board import Board
 
 
 def main_game():

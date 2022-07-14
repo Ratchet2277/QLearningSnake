@@ -1,7 +1,7 @@
 from copy import copy
 
-from Coordinates import Coordinates
-from Direction import Direction
+from Struct.Coordinates import Coordinates
+from Enum.Direction import Direction
 
 
 class Snake:
