@@ -95,8 +95,8 @@ class SnakeEnvironement(py_environment.PyEnvironment):
             reward = 0
             if (len(self.board.snake.body) - self.initial_size) > 0:
                 reward = 1
-            return ts.transition(np.array([self._state], dtype=np.int32), reward=reward, discount=1.0)
+            return ts.transition(np.array(self._state, dtype=np.int32), reward=reward, discount=1.0)
         else:
             self.episode_ended = True
-            return ts.termination(np.array([self._state], dtype=np.int32),
+            return ts.termination(np.array(self._state, dtype=np.int32),
                                   reward=len(self.board.snake.body) - (self.default_size ^ 2))
