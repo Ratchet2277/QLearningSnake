@@ -9,4 +9,6 @@ setup(name='QLearning Snake',
           'tf_agents',
           'tensorflow',
           'pygame',
+          'numpy',
+          'ts'
       ])
