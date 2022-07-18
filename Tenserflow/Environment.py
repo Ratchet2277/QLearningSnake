@@ -1,3 +1,4 @@
+from abc import ABC
 from copy import copy
 
 import numpy as np
@@ -15,11 +16,11 @@ def create_board(size: int = 100) -> Board:
     return Board(size, size)
 
 
-class SnakeEnvironement(py_environment.PyEnvironment):
+class SnakeEnvironment(py_environment.PyEnvironment, ABC):
     default_size: int = 100
 
     def __init__(self):
-        super(SnakeEnvironement, self).__init__()
+        super(SnakeEnvironment, self).__init__()
         self._action_spec = array_spec.BoundedArraySpec(
             shape=(), dtype=np.int32, minimum=-2, maximum=2, name='snake direction')
         self._observation_spec = array_spec.BoundedArraySpec(

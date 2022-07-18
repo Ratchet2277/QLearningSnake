@@ -7,10 +7,10 @@
 from tf_agents.environments import utils
 
 # Press the green button in the gutter to run the script.
-from Tenserflow.Environment import SnakeEnvironement
+from Tenserflow.Environment import SnakeEnvironment
 
 if __name__ == '__main__':
-    environment = SnakeEnvironement()
+    environment = SnakeEnvironment()
     utils.validate_py_environment(environment, episodes=5)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
