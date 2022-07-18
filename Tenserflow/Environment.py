@@ -1,13 +1,14 @@
+from copy import copy
+
 import numpy as np
 import ts as ts
 from tf_agents.environments import py_environment
 from tf_agents.specs import array_spec
 from tf_agents.trajectories import time_step as ts
 
-from Enum.Direction import Direction
+from Enum.Direction import Direction, Axis
 from Enum.Obstruction import Obstruction
 from Game.Board import Board
-from Struct.Coordinates import Coordinates
 
 
 def create_board(size: int = 100) -> Board:
@@ -42,9 +43,9 @@ class SnakeEnvironement(py_environment.PyEnvironment):
     def _observe_one_direction(self, direction: Direction):
         head = self.board.snake.get_head_pos()
         if direction in [Direction.NORTH, Direction.SOUTH]:
-            axis = 1
+            axis = Axis.Y
         else:
-            axis = 0
+            axis = Axis.X
 
         if direction > 0:
             delta = 1
@@ -53,21 +54,14 @@ class SnakeEnvironement(py_environment.PyEnvironment):
 
         distance = 0
 
-        if axis:
-            variable_coordinate = head.x
-        else:
-            variable_coordinate = head.y
-
         type = Obstruction.WALL
 
-        while variable_coordinate in range(0, self.default_size):
-            distance += 1
-            variable_coordinate += delta
+        coordinate = copy(head)
 
-            if axis:
-                coordinate = Coordinates(variable_coordinate, head.y)
-            else:
-                coordinate = Coordinates(head.x, variable_coordinate)
+        for i in range(0, self.default_size):
+            distance += 1
+
+            coordinate.increment_axis(axis, delta)
 
             if coordinate in self.board.snake.body:
                 type = Obstruction.SNAKE
