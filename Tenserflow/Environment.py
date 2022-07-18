@@ -55,7 +55,7 @@ class SnakeEnvironment(py_environment.PyEnvironment, ABC):
 
         distance = 0
 
-        type = Obstruction.WALL
+        obstruction_type = Obstruction.WALL
 
         coordinate = copy(head)
 
@@ -65,13 +65,13 @@ class SnakeEnvironment(py_environment.PyEnvironment, ABC):
             coordinate.increment_axis(axis, delta)
 
             if coordinate in self.board.snake.body:
-                type = Obstruction.SNAKE
+                obstruction_type = Obstruction.SNAKE
                 break
             elif coordinate == self.board.goal:
-                type = Obstruction.GOAL
+                obstruction_type = Obstruction.GOAL
                 break
 
-        return [distance, type]
+        return [distance, obstruction_type]
 
     def _reset(self):
         self.board = create_board(self.default_size)
