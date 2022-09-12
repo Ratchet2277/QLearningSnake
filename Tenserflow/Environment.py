@@ -37,8 +37,9 @@ class SnakeEnvironment(py_environment.PyEnvironment, ABC):
         return self._action_spec
 
     def _observation(self):
-        result = [self._observe_one_direction(Direction.NORTH), self._observe_one_direction(Direction.SOUTH),
-                  self._observe_one_direction(Direction.EAST), self._observe_one_direction(Direction.WEST)]
+        result = []
+        for direction in Direction:
+            result.append(self._observe_one_direction(direction))
         return np.array(result, dtype=np.int32)
 
     def _observe_one_direction(self, direction: Direction):
@@ -67,7 +68,7 @@ class SnakeEnvironment(py_environment.PyEnvironment, ABC):
             if coordinate in self.board.snake.body:
                 obstruction_type = Obstruction.SNAKE
                 break
-            elif coordinate == self.board.goal:
+            if coordinate == self.board.goal:
                 obstruction_type = Obstruction.GOAL
                 break
 
